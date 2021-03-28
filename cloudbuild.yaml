@@ -1,0 +1,30 @@
+steps:
+- name: gcr.io/cloud-builders/docker
+  id: login
+  entrypoint: bash
+  secretEnv: ["DOCKER_PASSWORD"]
+  args:
+  - -c
+  - |
+    docker login --username=arrisar --password=$$DOCKER_PASSWORD
+
+- name: gcr.io/cloud-builders/docker
+  id: build
+  entrypoint: bash
+  args:
+  - -c
+  - |
+    docker build . -t arrisar/gcp-ddns:latest
+
+- name: gcr.io/cloud-builders/docker
+  id: push
+  entrypoint: bash
+  args:
+  - -c
+  - |
+    docker push arrisar/gcp-ddns:latest
+
+availableSecrets:
+   secretManager:
+   - versionName: projects/326213337529/secrets/DOCKER_PASSWORD/versions/1
+     env: "DOCKER_PASSWORD"
