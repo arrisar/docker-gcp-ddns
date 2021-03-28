@@ -1,0 +1,9 @@
+auth:
+  account: service-account@example.iam.gserviceaccount.com
+  project: example
+  key: /app/data/service-account-key.json
+records:
+- name: record.example.org
+  zone: example-zone
+  type: A
+  ttl: 300
